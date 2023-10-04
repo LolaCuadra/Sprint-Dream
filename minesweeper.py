@@ -5,7 +5,7 @@ pygame.init()
 SCREEN_WIDHT = 1000
 SCREEN_HEIGHT = 600
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_WIDTH))
+screen = pygame.display.set_mode((SCREEN_WIDHT, SCREEN_HEIGHT))
 
 player = pygame.Rect((300, 250, 50, 50))
 
