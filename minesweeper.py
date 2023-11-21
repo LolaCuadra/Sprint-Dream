@@ -92,8 +92,6 @@ class Game:
                     # Reset the timer when the game ends
                     self.start_time = pygame.time.get_ticks()
                     return
-
-
 game = Game()
 while True:
     game.new()
