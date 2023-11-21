@@ -35,7 +35,7 @@ tile_mine = pygame.transform.scale(pygame.image.load(os.path.join("images", "Til
 tile_unknown = pygame.transform.scale(pygame.image.load(os.path.join("images", "TileUnknown.png")), (TILESIZE, TILESIZE))
 tile_not_mine = pygame.transform.scale(pygame.image.load(os.path.join("images", "TileNotMine.png")), (TILESIZE, TILESIZE))
 
-# Load sounds
-bomb_explosion_sound = pygame.mixer.Sound(os.path.join("sounds", "bomba.wav"))
-flag_placement_sound = pygame.mixer.Sound(os.path.join("sounds", "flag.wav"))
-ships_bells_sound = pygame.mixer.Sound(os.path.join("sounds", "shipsbell.wav"))
+# # Load sounds
+# bomb_explosion_sound = pygame.mixer.Sound(os.path.join("sounds", "bomba.wav"))
+# flag_placement_sound = pygame.mixer.Sound(os.path.join("sounds", "flag.wav"))
+# ships_bells_sound = pygame.mixer.Sound(os.path.join("sounds", "shipsbell.wav"))

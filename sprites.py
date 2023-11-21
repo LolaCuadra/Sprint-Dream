@@ -25,16 +25,13 @@ class Tile:
 
     def __repr__(self):
         return self.type
-
-
 class Board:
-    def __init__(self,bomb_explosion_sound):
+    def __init__(self):
         self.board_surface = pygame.Surface((WIDTH, HEIGHT))
         self.board_list = [[Tile(col, row, tile_empty, ".") for row in range(ROWS)] for col in range(COLS)]
         self.place_mines()
         self.place_clues()
         self.dug = []
-        self.bomb_explosion_sound = bomb_explosion_sound
 
     def place_mines(self):
         for _ in range(AMOUNT_MINES):
@@ -83,7 +80,7 @@ class Board:
         if self.board_list[x][y].type == "X":
             self.board_list[x][y].revealed = True
             self.board_list[x][y].image = tile_exploded
-            bomb_explosion_sound.play()
+        
             return False
         elif self.board_list[x][y].type == "C":
             self.board_list[x][y].revealed = True
