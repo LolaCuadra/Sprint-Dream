@@ -3,8 +3,8 @@ we need to:
 create different dificulty in the game 
 change cols and rows + amount of mines 
 
-add sounds! 
+add sounds! (50/100)
 
-is my clock not working?
+is my clock not working? (working but how can we add a black space within the board to display the clock)
 
-background music?
+background music? 
