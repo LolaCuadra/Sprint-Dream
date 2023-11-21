@@ -1,0 +1,10 @@
+we need to:
+
+create different dificulty in the game 
+change cols and rows + amount of mines 
+
+add sounds! 
+
+is my clock not working?
+
+background music?

@@ -1,56 +1,88 @@
 import pygame
-import random
+from settings import *
+from sprites import *
 
-pygame.init()
+class Game:
+    def __init__(self):
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption(TITLE)
+        self.clock = pygame.time.Clock()
 
-# Constants for the game
-GRID_SIZE = 16  # Grid size (16x16 for easy)
-CELL_SIZE = 40  # Cell size (adjust as needed)
-BOMB_COUNT = 40  # Total bomb count for easy difficulty
+    def new(self):
+        self.board = Board()
+        self.board.display_board()
 
-# Calculate screen dimensions based on grid and cell size
-SCREEN_WIDTH = GRID_SIZE * CELL_SIZE
-SCREEN_HEIGHT = GRID_SIZE * CELL_SIZE
+    def run(self):
+        self.playing = True
+        while self.playing:
+            self.clock.tick(FPS)
+            self.events()
+            self.draw()
+        else:
+            self.end_screen()
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    def draw(self):
+        self.screen.fill(BGCOLOUR)
+        self.board.draw(self.screen)
+        pygame.display.flip()
 
-# Function to initialize the grid with bombs and numbers
-def initialize_grid():
-    grid = [[0 for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
-    bomb_positions = random.sample(range(GRID_SIZE * GRID_SIZE), BOMB_COUNT)
-    for pos in bomb_positions:
-        row = pos // GRID_SIZE
-        col = pos % GRID_SIZE
-        grid[row][col] = -1  # Marking bomb positions as -1
+    def check_win(self):
+        for row in self.board.board_list:
+            for tile in row:
+                if tile.type != "X" and not tile.revealed:
+                    return False
+        return True
 
-    return grid
+    def events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit(0)
 
-# Function to draw the grid
-def draw_grid():
-    for row in range(GRID_SIZE):
-        for col in range(GRID_SIZE):
-            cell_rect = pygame.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
-            pygame.draw.rect(screen, (192, 192, 192), cell_rect, 1)  # Draw grid lines
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mx, my = pygame.mouse.get_pos()
+                mx //= TILESIZE
+                my //= TILESIZE
 
-# Initialize the Minesweeper grid
-grid = initialize_grid()
+                if event.button == 1:
+                    if not self.board.board_list[mx][my].flagged:
+                        # dig and check if exploded
+                        if not self.board.dig(mx, my):
+                            # explode
+                            for row in self.board.board_list:
+                                for tile in row:
+                                    if tile.flagged and tile.type != "X":
+                                        tile.flagged = False
+                                        tile.revealed = True
+                                        tile.image = tile_not_mine
+                                    elif tile.type == "X":
+                                        tile.revealed = True
+                            self.playing = False
 
-run = True
-while run:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
+                if event.button == 3:
+                    if not self.board.board_list[mx][my].revealed:
+                        self.board.board_list[mx][my].flagged = not self.board.board_list[mx][my].flagged
 
-    # Draw the grid
-    draw_grid()
+                if self.check_win():
+                    self.win = True
+                    self.playing = False
+                    for row in self.board.board_list:
+                        for tile in row:
+                            if not tile.revealed:
+                                tile.flagged = True
 
-    # Update the display
-    pygame.display.update()
+    def end_screen(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit(0)
 
-pygame.quit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    return
 
 
-
-
-
-
+game = Game()
+while True:
+    game.new()
+    game.run()
