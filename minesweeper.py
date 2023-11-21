@@ -2,11 +2,15 @@ import pygame
 from settings import *
 from sprites import *
 
+
 class Game:
     def __init__(self):
+        pygame.init()  # Initialize pygame
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
+        self.timer_font = pygame.font.SysFont("Consolas", 36)
+        self.start_time = pygame.time.get_ticks()
 
     def new(self):
         self.board = Board()
@@ -24,6 +28,12 @@ class Game:
     def draw(self):
         self.screen.fill(BGCOLOUR)
         self.board.draw(self.screen)
+        
+        # Calculate elapsed time
+        elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000
+        timer_surface = self.timer_font.render(f"Time: {elapsed_time}", True, BLACK)
+        self.screen.blit(timer_surface, (10, 10))
+ 
         pygame.display.flip()
 
     def check_win(self):
@@ -79,6 +89,8 @@ class Game:
                     quit(0)
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    # Reset the timer when the game ends
+                    self.start_time = pygame.time.get_ticks()
                     return
 
 

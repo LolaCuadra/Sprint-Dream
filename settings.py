@@ -14,14 +14,15 @@ YELLOW = (255, 255, 0)
 BGCOLOUR = DARKGREY
 
 # game settings
+
 TILESIZE = 32
 ROWS = 15
 COLS = 15
-AMOUNT_MINES = 5
+AMOUNT_MINES = 20
 WIDTH = TILESIZE * ROWS
 HEIGHT = TILESIZE * COLS
 FPS = 60
-TITLE = "Minesweeper Clone"
+TITLE = "Coolest Minesweeper by Sprint Dream"
 
 tile_numbers = []
 for i in range(1, 9):
@@ -33,6 +34,3 @@ tile_flag = pygame.transform.scale(pygame.image.load(os.path.join("images", "Til
 tile_mine = pygame.transform.scale(pygame.image.load(os.path.join("images", "TileMine.png")), (TILESIZE, TILESIZE))
 tile_unknown = pygame.transform.scale(pygame.image.load(os.path.join("images", "TileUnknown.png")), (TILESIZE, TILESIZE))
 tile_not_mine = pygame.transform.scale(pygame.image.load(os.path.join("images", "TileNotMine.png")), (TILESIZE, TILESIZE))
-
-
-
