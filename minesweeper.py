@@ -9,7 +9,7 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
-        self.timer_font = pygame.font.SysFont("Consolas", 36)
+        self.timer_font = pygame.font.SysFont("Consolas", 24)
         self.start_time = pygame.time.get_ticks()
 
     def new(self):
@@ -27,13 +27,14 @@ class Game:
 
     def draw(self):
         self.screen.fill(BGCOLOUR)
-        self.board.draw(self.screen)
-        
+
         # Calculate elapsed time
         elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000
-        timer_surface = self.timer_font.render(f"Time: {elapsed_time}", True, BLACK)
+        timer_space = 30
+        timer_surface = self.timer_font.render(f"Time: {elapsed_time}", True, WHITE)
         self.screen.blit(timer_surface, (10, 10))
- 
+        self.board.draw(self.screen, timer_space)
+
         pygame.display.flip()
 
     def check_win(self):
@@ -53,6 +54,9 @@ class Game:
                 mx, my = pygame.mouse.get_pos()
                 mx //= TILESIZE
                 my //= TILESIZE
+
+                # Adjust for extra_space
+                my -= 1
 
                 if event.button == 1:
                     if not self.board.board_list[mx][my].flagged:
@@ -80,6 +84,7 @@ class Game:
                         for tile in row:
                             if not tile.revealed:
                                 tile.flagged = True
+
 
     def end_screen(self):
         while True:

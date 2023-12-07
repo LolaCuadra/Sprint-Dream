@@ -15,19 +15,20 @@ class Tile:
         self.revealed = revealed
         self.flagged = flagged
 
-    def draw(self, board_surface):
+    def draw(self, screen, extra_space=0):
+        adjusted_y = self.y + extra_space
         if not self.flagged and self.revealed:
-            board_surface.blit(self.image, (self.x, self.y))
+            screen.blit(self.image, (self.x, adjusted_y))
         elif self.flagged and not self.revealed:
-            board_surface.blit(tile_flag, (self.x, self.y))
+            screen.blit(tile_flag, (self.x, adjusted_y))
         elif not self.revealed:
-            board_surface.blit(tile_unknown, (self.x, self.y))
+            screen.blit(tile_unknown, (self.x, adjusted_y))
 
     def __repr__(self):
         return self.type
+
 class Board:
     def __init__(self):
-        self.board_surface = pygame.Surface((WIDTH, HEIGHT))
         self.board_list = [[Tile(col, row, tile_empty, ".") for row in range(ROWS)] for col in range(COLS)]
         self.place_mines()
         self.place_clues()
@@ -69,18 +70,18 @@ class Board:
 
         return total_mines
 
-    def draw(self, screen):
+
+    def draw(self, screen, extra_space=0):
         for row in self.board_list:
             for tile in row:
-                tile.draw(self.board_surface)
-        screen.blit(self.board_surface, (0, 0))
+                tile.draw(screen, extra_space)
 
     def dig(self, x, y):
         self.dug.append((x, y))
         if self.board_list[x][y].type == "X":
             self.board_list[x][y].revealed = True
             self.board_list[x][y].image = tile_exploded
-        
+
             return False
         elif self.board_list[x][y].type == "C":
             self.board_list[x][y].revealed = True
