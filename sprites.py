@@ -1,5 +1,6 @@
 import random
 import pygame
+import os
 from settings import *
 
 # types list
@@ -35,6 +36,73 @@ class Board:
         self.dug = []
 
     def place_mines(self):
+        # define the RGB value for white,
+        #  green, blue colour
+        white = (255, 255, 255)
+        black = (0, 0, 0)
+        green = (0, 255, 0)
+        blue = (0, 0, 128)
+
+        # assigning values to X and Y variable
+        X = 400
+        Y = 400
+
+        # create the display surface object
+        # of specific dimension..e(X, Y).
+        display_surface = pygame.display.set_mode((X, Y))
+
+        # set the pygame window name
+        pygame.display.set_caption('Difficulty Select')
+
+        # create a font object.
+        # 1st parameter is the font file
+        # which is present in pygame.
+        # 2nd parameter is size of the font
+        font = pygame.font.Font('Merriweather-Black.ttf', 32)
+
+        # create a text surface object,
+        # on which text is drawn on it.
+        text = font.render('Easy Difficulty', True, black, white)
+        text2 = font.render('Hard Difficulty', True, black, white)
+
+        # create a rectangular object for the
+        # text surface object
+        textRect = text.get_rect()
+        textRect2 = text2.get_rect()
+
+        # set the center of the rectangular object.
+        textRect.center = (X // 2, Y // 2)
+        textRect2.center = (X // 2, Y // 3)
+
+        x = True
+
+        while x == True:
+            # completely fill the surface object
+            # with white color
+            display_surface.fill(white)
+
+            # copying the text surface object
+            # to the display surface object
+            # at the center coordinate.
+            display_surface.blit(text, textRect)
+            display_surface.blit(text2, textRect2)
+
+            # iterate over the list of Event objects
+            # that was returned by pygame.event.get() method.
+            for event in pygame.event.get():
+
+                # Get mouse position
+                mpos = pygame.mouse.get_pos()
+                # Check if position is in the rect
+                if event.type == pygame.MOUSEBUTTONUP and textRect2.collidepoint(mpos):
+                    AMOUNT_MINES = 40
+                    x = False
+                elif event.type == pygame.MOUSEBUTTONUP and textRect.collidepoint(mpos):
+                    AMOUNT_MINES = 20
+                    x = False
+
+                # Draws the surface object to the screen.
+                pygame.display.update()
         for _ in range(AMOUNT_MINES):
             while True:
                 x = random.randint(0, ROWS-1)
