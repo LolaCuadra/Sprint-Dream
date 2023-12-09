@@ -14,11 +14,11 @@ Testing and debugging were integral to ensuring the game's functionality, and ve
 Ultimately, the integrated environment, with Pygame for game development and MongoDB for high-score storage, created a robust foundation for a polished Minesweeper game.
 # Collaborators
 
-Josue Molina
-Christian Landaverde 
-Joseph Gregory
-Shaun Vann
-Dolores Cuadra
+* Josue Molina
+* Christian Landaverde 
+* Joseph Gregory
+* Shaun Vann
+* Dolores Cuadra
 
 
 # Useful Websites
