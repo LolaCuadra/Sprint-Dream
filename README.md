@@ -1,12 +1,27 @@
-What the project does
-We are making Minesweeper. Minesweeper is a puzzle game where you try to select a square that does not contain a bomb. Once a square is selected, it shows a number which is equal to the number of bombs adjacent to the square. You win by clearing every square except for the bombs.
+# Overview
 
-Why the project is useful
-Minesweeper trains pattern recognition, flexibility, and logic. It also acts as a way to distract your brain from difficult situations which helps reduce stress.
+Dive into strategic minefield exploration with our Minesweeper game! Crafted in Python using Pygame, this classic challenges your deduction skills. Uncover tiles, use numerical clues, and strategically flag potential mines. Enjoy immersive graphics and customizable difficulty, offering endless replayability. Victory comes from clearing the grid, but one wrong move can be explosive. Get ready for a dynamic puzzle experience in the world of Minesweeper!
 
-How users can get started with the project
-Where users can get help with your project
-Users can find help under Basic Patters at https://minesweepergame.com/strategy/how-to-play-minesweeper.php
+// Video to be added 
 
-Who maintains and contributes to the project
-Names
+# Development Environment
+we developed the Minesweeper game using Python as the programming language, with Pygame as the game development library. Visual Studio Code served as my chosen code editor, and we utilized Git for version control. The project folder included separate directories for Python scripts and images. External resources, such as mine and flag images, were integrated into the game. Testing and debugging were performed using print statements and Pygame's debugging features.
+
+# Collaborators
+
+Josue Molina
+Christian Landaverde 
+Joseph Gregory
+Shaun Vann
+Dolores Cuadra
+
+
+# Useful Websites
+
+{Make a list of websites that you found helpful in this project}
+* [Minesweeper Basics](https://minesweepergame.com/strategy/how-to-play-minesweeper.php)
+* [Minesweeper Complete guide](https://www.pygame.org/project/3555)
+
+# Future Work
+
+* host in the web
