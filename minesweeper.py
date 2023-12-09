@@ -12,12 +12,16 @@ realrecord = record.find()
 permtime = 0
 class Game:
     def __init__(self):
-        pygame.init()  # Initialize pygame
+        pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
         self.timer_font = pygame.font.SysFont("Consolas", 24)
         self.start_time = pygame.time.get_ticks()
+
+        # Declare elapsed_time as an instance variable
+        self.elapsed_time = 0  
+    
 
     def new(self):
         # Accessing Board from sprites to create the display
@@ -41,12 +45,15 @@ class Game:
         self.screen.fill(BGCOLOUR)
 
         # Calculate elapsed time
-        elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000
-        #update global variable for high score keeping
-        permtime = elapsed_time
+        self.elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000
         timer_space = 30
-        timer_surface = self.timer_font.render(f"Time: {elapsed_time}", True, WHITE)
+        timer_surface = self.timer_font.render(f"Time: {self.elapsed_time}", True, WHITE)
         self.screen.blit(timer_surface, (10, 10))
+        
+        # Use self.elapsed_time as "Your Score"
+        score_surface = self.timer_font.render(f"Your Score: {self.elapsed_time}", True, WHITE)
+        self.screen.blit(score_surface, (10, 40))
+        
         timer_surface = self.timer_font.render(f"High Score: {realrecord[0]['HighScore']}", True, WHITE)
         self.screen.blit(timer_surface, (275, 10))
         self.board.draw(self.screen, timer_space)
@@ -58,8 +65,10 @@ class Game:
             for tile in row:
                 if tile.type != "X" and not tile.revealed:
                     return False
+
+        # Use self.elapsed_time as the score
         record.delete_many({})
-        mydict = {"HighScore": permtime }
+        mydict = {"HighScore": self.elapsed_time}
         x = record.insert_one(mydict)
         return True
 
@@ -110,6 +119,31 @@ class Game:
 
 
     def end_screen(self):
+        game_over_font = pygame.font.SysFont("Consolas", 36)
+        score_font = pygame.font.SysFont("Consolas", 24)
+        button_font = pygame.font.SysFont("Consolas", 18)
+
+        game_over_text = game_over_font.render("Game Over", True, RED)
+        
+        # Use self.elapsed_time as the player's score
+        score_text = score_font.render(f"Your Score: {self.elapsed_time}", True, WHITE)
+        
+        high_score_text = score_font.render(f"Highest Score: {realrecord[0]['HighScore']}", True, WHITE)
+        new_game_text = button_font.render("New Game", True, WHITE)
+
+        game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))
+        score_rect = score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+        high_score_rect = high_score_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 30))
+        new_game_rect = new_game_text.get_rect(center=(WIDTH // 2, HEIGHT // 1.5))
+
+        self.screen.fill(BGCOLOUR)
+        self.screen.blit(game_over_text, game_over_rect)
+        self.screen.blit(score_text, score_rect)
+        self.screen.blit(high_score_text, high_score_rect)
+        self.screen.blit(new_game_text, new_game_rect)
+
+        pygame.display.flip()
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -117,9 +151,11 @@ class Game:
                     quit(0)
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    # Reset the timer when the game ends
-                    self.start_time = pygame.time.get_ticks()
-                    return
+                    mx, my = pygame.mouse.get_pos()
+                    if new_game_rect.collidepoint(mx, my):
+                        # Reset the timer when the new game button is clicked
+                        self.start_time = pygame.time.get_ticks()
+                        return
 game = Game()
 while True:
     game.new()
