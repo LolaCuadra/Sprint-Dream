@@ -4,7 +4,7 @@ from settings import *
 from sprites import *
 
 from pymongo import MongoClient
-#fetch the high score
+# fetch the high score
 client = MongoClient("mongodb+srv://Datramer:Goog4me1@cluster0.dfekkct.mongodb.net?retryWrites=true&w=majority")
 db = client.get_database('Minesweep')
 record = db["highscore"]
@@ -20,6 +20,7 @@ class Game:
         self.start_time = pygame.time.get_ticks()
 
     def new(self):
+        # Accessing Board from sprites to create the display
         self.board = Board()
         self.board.display_board()
 
@@ -89,7 +90,7 @@ class Game:
                                         tile.image = tile_not_mine
                                     elif tile.type == "X":
                                         tile.revealed = True
-                            #stop music and explode
+                            # stop music and explode
                             pygame.mixer.music.unload()
                             pygame.mixer.music.load('sounds/bomba.wav')
                             pygame.mixer.music.play(loops=0)
@@ -121,6 +122,5 @@ class Game:
                     return
 game = Game()
 while True:
-    
     game.new()
     game.run()
