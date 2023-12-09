@@ -18,7 +18,6 @@ Dolores Cuadra
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
 * [Minesweeper Basics](https://minesweepergame.com/strategy/how-to-play-minesweeper.php)
 * [Minesweeper Complete guide](https://www.pygame.org/project/3555)
 
