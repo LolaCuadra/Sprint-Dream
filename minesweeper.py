@@ -1,8 +1,16 @@
 import pygame
 from settings import *
 from sprites import *
-
-
+from pymongo import MongoClient
+pygame.mixer.init()
+pygame.mixer.music.load('sounds/tetrisC.mp3')
+pygame.mixer.music.play(loops=0)
+client = MongoClient("mongodb+srv://Datramer:Goog4me1@cluster0.dfekkct.mongodb.net?retryWrites=true&w=majority")
+db = client.get_database('Minesweep')
+record = db["highscore"]
+realrecord = record.find()
+myquery = { "_id": "ObjectId('6573a5effeaed635172053b4')" }
+permtime = 0
 class Game:
     def __init__(self):
         pygame.init()  # Initialize pygame
@@ -30,9 +38,12 @@ class Game:
 
         # Calculate elapsed time
         elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000
+        permtime = elapsed_time
         timer_space = 30
         timer_surface = self.timer_font.render(f"Time: {elapsed_time}", True, WHITE)
         self.screen.blit(timer_surface, (10, 10))
+        timer_surface = self.timer_font.render(f"High Score: {realrecord[0]['HighScore']}", True, WHITE)
+        self.screen.blit(timer_surface, (275, 10))
         self.board.draw(self.screen, timer_space)
 
         pygame.display.flip()
@@ -42,6 +53,9 @@ class Game:
             for tile in row:
                 if tile.type != "X" and not tile.revealed:
                     return False
+        record.delete_many({})
+        mydict = {"HighScore": permtime }
+        x = record.insert_one(mydict)
         return True
 
     def events(self):
@@ -71,6 +85,9 @@ class Game:
                                         tile.image = tile_not_mine
                                     elif tile.type == "X":
                                         tile.revealed = True
+                            pygame.mixer.music.unload()
+                            pygame.mixer.music.load('sounds/bomba.wav')
+                            pygame.mixer.music.play(loops=0)
                             self.playing = False
 
                 if event.button == 3:
