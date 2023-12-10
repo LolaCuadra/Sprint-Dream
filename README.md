@@ -2,7 +2,7 @@
 
 Dive into strategic minefield exploration with our Minesweeper game! Crafted in Python using Pygame, this classic challenges your deduction skills. Uncover tiles, use numerical clues, and strategically flag potential mines. Enjoy immersive graphics and customizable difficulty, offering endless replayability. Victory comes from clearing the grid, but one wrong move can be explosive. Get ready for a dynamic puzzle experience in the world of Minesweeper!
 
-https://www.youtube.com/watch?v=dvvrOeITzG8&pp=ygUUbWluZXN3ZWVwZXIgdHV0b3JpYWw%3D
+[video presentation:](https://www.loom.com/share/07e24cb552ae439c9952e692401294c3?sid=bf33cc27-a5e2-4321-9fc3-8eeb100a3ecc)
 
 # Development Environment
 In creating the Minesweeper game, we employed Python as the primary programming language, leveraging the Pygame library to streamline graphics and user interaction. The development environment included an organized project folder structure and a chosen IDE for code editing.
@@ -29,3 +29,6 @@ Ultimately, the integrated environment, with Pygame for game development and Mon
 # Future Work
 
 * host in the web
+* fix high score (broken by Lola)
+* make screen bigger
+* Have a better Welcome View 

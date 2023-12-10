@@ -4,7 +4,7 @@ from settings import *
 from sprites import *
 
 from pymongo import MongoClient
-# fetch the high score
+#fetch the high score
 client = MongoClient("mongodb+srv://Datramer:Goog4me1@cluster0.dfekkct.mongodb.net?retryWrites=true&w=majority")
 db = client.get_database('Minesweep')
 record = db["highscore"]
@@ -68,7 +68,7 @@ class Game:
 
         # Use self.elapsed_time as the score
         record.delete_many({})
-        mydict = {"HighScore": self.elapsed_time}
+        mydict = {"HighScore": permtime}
         x = record.insert_one(mydict)
         return True
 
@@ -128,7 +128,8 @@ class Game:
         # Use self.elapsed_time as the player's score
         score_text = score_font.render(f"Your Score: {self.elapsed_time}", True, WHITE)
         
-        high_score_text = score_font.render(f"Highest Score: {realrecord[0]['HighScore']}", True, WHITE)
+        # high_score_text = score_font.render(f"Highest Score: {realrecord[0]['HighScore']}", True, WHITE)
+        high_score_text = score_font.render(f"Highest Score: 120", True, WHITE)
         new_game_text = button_font.render("New Game", True, WHITE)
 
         game_over_rect = game_over_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))

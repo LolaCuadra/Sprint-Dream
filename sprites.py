@@ -51,9 +51,6 @@ class Board:
         # of specific dimension..e(X, Y).
         display_surface = pygame.display.set_mode((X, Y))
 
-        # set the pygame window name
-        pygame.display.set_caption('Difficulty Select')
-
         # create a font object.
         # 1st parameter is the font file
         # which is present in pygame.
